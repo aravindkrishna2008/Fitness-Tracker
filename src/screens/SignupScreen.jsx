@@ -1,19 +1,38 @@
 import React from 'react'
 import {StyleSheet, View, Text, Button, TextInput} from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
  
 const SignupScreen = ({navigation}) => {
   return(
-    <View style={styles.container}>
+    <View style={styles.container2}>
+      <View style={styles.container}>
       <Text style={styles.textStyle}>Enter First Name: </Text>
-      <TextInput style={styles.inputStyle}/>
+      <View style={styles.inputStyle}>
+        <Ionicons name="person-outline" size={25} />
+        <Text>  </Text>
+        <TextInput style={{width: 1000}}/>
+      </View>
       <Text style={styles.textStyle}>Enter Last Name:</Text>
-      <TextInput style={styles.inputStyle}/>
+      <View style={styles.inputStyle}>
+        <Ionicons name="person-outline" size={25} />
+        <Text>  </Text>
+        <TextInput style={{width: 1000}}/>
+      </View>
       <Text style={styles.textStyle}>Enter Email: </Text>
-      <TextInput style={styles.inputStyle}/>
+      <View style={styles.inputStyle}>
+        <Ionicons name="mail-outline" size={25} />
+        <Text>  </Text>
+        <TextInput style={{width: 1000}}/>
+      </View>
       <Text style={styles.textStyle}>Enter Password: </Text>
-      <TextInput style={styles.inputStyle}secureTextEntry/>
+      <View style={styles.inputStyle}>
+        <Ionicons name="key-outline" size={25} />
+        <Text>  </Text>
+        <TextInput style={{width: 1000}} secureTextEntry/>
+      </View>
       <Button title="Go to Home Flow" onPress={() => navigation.navigate("HomeFlow")}/>
       <Button title="Go to sign in" onPress={() => navigation.navigate("Signin")}/>
+    </View>
     </View>
   )
 }
@@ -28,9 +47,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    margin: 20
+    margin: 20,
+    backgroundColor: 'white'
     
   
+  },
+  container2: {
+    flex: 1,
+    backgroundColor: 'white'
   }, 
   inputStyle: {
     borderWidth: 1,
@@ -38,7 +62,8 @@ const styles = StyleSheet.create({
     padding: 8,
     margin:15,
     width:300,
-    borderRadius: 20
+    borderRadius: 20,
+    flexDirection: 'row'
   },
   textStyle: {
     margin: 10
