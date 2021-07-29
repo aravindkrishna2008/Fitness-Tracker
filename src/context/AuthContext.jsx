@@ -25,7 +25,7 @@ const tryLocalSignin = (dispatch) => async () => {
     dispatch({ type: "signin", payload: token });
     navigate("HomeFlow");
   } else {
-    navigate("Signup");
+    navigate("signup");
   }
 };
 
