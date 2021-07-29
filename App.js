@@ -1,10 +1,7 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Navigator from './src/routes/Navigator'
-
-const Tab = createBottomTabNavigator();
+import { Provider as AuthProvider } from './src/context/AuthContext';
+import { setNavigator } from './src/navigationRef';
 
 const App = () => {
   return (
@@ -14,4 +11,10 @@ const App = () => {
   );
 }
 
-export default App
+export default () => {
+	return (
+		<AuthProvider>
+			<App />
+		</AuthProvider>
+	)
+}

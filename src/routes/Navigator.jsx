@@ -7,18 +7,21 @@ import SwimScreen from '../screens/SwimScreen';
 import ExerciseRoutineScreen from '../screens/ExerciseRoutineScreen';
 import WalkScreen from '../screens/WalkScreen';
 import SigninScreen from '../screens/SigninScreen';
+import { navigationRef } from '../RootNavigation';
+import ResolveAuthScreen from '../screens/ResolveAuthScreen';
 
 const Stack = createStackNavigator();
 
 
 export default function Navigator() {
 	return (
-		<NavigationContainer>
+		<NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false
         }}
       >
+        <Stack.Screen name="ResolveAuth" component={ResolveAuthScreen} />
         <Stack.Screen name="signup" component={SignupScreen}/>
         <Stack.Screen name="HomeFlow" component={HomeTab}/>
         <Stack.Screen name="Swim" component={SwimScreen}/>
