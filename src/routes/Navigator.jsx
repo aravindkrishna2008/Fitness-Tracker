@@ -33,6 +33,7 @@ export default function Navigator() {
         }}
       >
         <Stack.Screen name="ResolveAuth" component={ResolveAuthScreen} />
+        <Stack.Screen name="Signin" component={SigninScreen} />
         <Stack.Screen name="signup" component={SignupScreen}/>
         <Stack.Screen name="HomeFlow" component={HomeTab}/>
         <Stack.Screen name="Swim" component={SwimScreen}/>
