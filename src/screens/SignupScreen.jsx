@@ -1,8 +1,10 @@
-import React, {useState, useContext} from 'react'
-import {StyleSheet, View, Text, Button, TextInput, ScrollView} from 'react-native'
+import React, {useState, useContext, useEffect} from 'react'
+import {StyleSheet, View, Text, ScrollView} from 'react-native'
+import { TextInput, Button, Title } from 'react-native-paper'
 import { Ionicons } from '@expo/vector-icons'
 import { Context as AuthContext } from '../context/AuthContext'
 import { navigate } from '../navigationRef'
+import { Constants, LinearGradient } from 'expo';
 
 const SignupScreen = ({navigation}) => {
 
@@ -15,43 +17,100 @@ const SignupScreen = ({navigation}) => {
     AuthContext
   );
 
-  const actualSignUp = () => {
-    signup({ firstName, lastName, email, password})
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      clearErrorMessage()
+    });
 
-    if (state.errorMessage == '') {
-      navigation.navigate("HomeFlow")
-    }
-  }
+    return unsubscribe;
+  }, [navigation]);
+
+
+
+  const unsubscribe = navigation.addListener('tabPress', () => {
+    // Prevent default action
+    errorMessage();
+  });
 
   return(
     <View style={styles.container2}>
       <ScrollView style={styles.container}>
-        <Text style={styles.textStyle}>Enter First Name: </Text>
-        <View style={styles.inputStyle}>
-          <Ionicons name="person-outline" size={25} />
-          <Text>  </Text>
-          <TextInput style={{width: 1000}} value={firstName} onChangeText={setFirstName}/>
-        </View>
-        <Text style={styles.textStyle}>Enter Last Name:</Text>
-        <View style={styles.inputStyle}>
-          <Ionicons name="person-outline" size={25} />
-          <Text>  </Text>
-          <TextInput style={{width: 1000}} value={lastName} onChangeText={setLastName}/>
-        </View>
-        <Text style={styles.textStyle}>Enter Email: </Text>
-        <View style={styles.inputStyle}>
-          <Ionicons name="mail-outline" size={25} />
-          <Text>  </Text>
-          <TextInput style={{width: 1000}} value={email} onChangeText={setEmail}  keyboardType="email-address"/>
-        </View>
-        <Text style={styles.textStyle}>Enter Password: </Text>
-        <View style={styles.inputStyle}>
-          <Ionicons name="key-outline" size={25} />
-          <Text>  </Text>
-          <TextInput style={{width: 1000}} secureTextEntry value={password} onChangeText={setPassword}/>
-        </View>
-        <Button title="Go to Home Flow" onPress={() => signup({ firstName, lastName, email, password})}/>
-        <Button title="Go to sign in" onPress={() => navigation.navigate("Signin")}/>
+        <Title style={{alignSelf: 'center', fontSize: 25}}>Sign up for Fitlance</Title>
+        <Ionicons name="fitness" size={75} color="red" style={{alignSelf: 'center'}}/>
+        {/* <Text style={styles.textStyle}>Enter First Name: </Text> */}
+        <TextInput 
+          style={{margin: 10}} 
+          value={firstName} 
+          onChangeText={setFirstName}
+          left={<TextInput.Icon name={() => <Ionicons name="person-outline" size={25} />} />}
+            label={'First Name'}
+            mode='outlined'
+          theme={{
+            roundness: 20,
+            colors: {
+              primary:'#30bfbf',
+              underlineColor:'transparent',
+            }
+          }}
+        />
+        {/* <Text style={styles.textStyle}>Enter Last Name:</Text> */}
+          <TextInput 
+            style={{margin: 10}} 
+            value={lastName} 
+            onChangeText={setLastName}
+            left={<TextInput.Icon name={() => <Ionicons name="person-outline" size={25} />} />}
+            label={'Last Name'}
+            mode='outlined'
+            theme={{
+              roundness: 20,
+              colors: {
+                primary:'#30bfbf',
+                underlineColor:'transparent',
+              }
+            }}
+          />
+          {/* <Text style={styles.textStyle}>Enter Email: </Text> */}
+          <TextInput 
+            style={{ margin: 10}} 
+            value={email} 
+            onChangeText={setEmail}  
+            keyboardType="email-address"
+            left={<TextInput.Icon name={() => <Ionicons name="mail-outline" size={25} />} />}
+            label={'Email'}
+            mode='outlined'
+            theme={{
+              roundness: 20,
+              colors: {
+                primary:'#30bfbf',
+                underlineColor:'transparent',
+              }
+            }}
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          {/* <Text style={styles.textStyle}>Enter Password: </Text> */}
+          <TextInput 
+            style={{ margin: 10}} 
+            secureTextEntry value={password} 
+            onChangeText={setPassword} 
+            left={<TextInput.Icon name={() => <Ionicons name="key-outline" size={25} />} />}
+            label={'Password'}
+            mode='outlined'
+            theme={{
+              roundness: 20,
+              colors: {
+                primary:'#30bfbf',
+                underlineColor:'transparent',
+              }
+            }}
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          {state.errorMessage ? (
+            <Text style={styles.errorMessage}>{state.errorMessage}</Text>
+          ) : null}
+        <Button dark={true} mode="contained" color={"#30bfbf"} onPress={() => signup({ firstName, lastName, email, password})}>Create</Button>
+        <Button mode='text' onPress={() => navigation.navigate("Signin")}>Have an account? Sign in instead</Button>
       </ScrollView>
     </View>
   )
@@ -81,7 +140,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   textStyle: {
-    margin: 10
+    marginTop: 15,
+    marginLeft: 10
+  },
+  errorMessage: {
+    color: 'red',
+    marginBottom: 10
   }
 });
  
