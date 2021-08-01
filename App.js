@@ -13,8 +13,8 @@ const App = () => {
 
 export default () => {
 	return (
-		<AuthProvider>
-			<App />
-		</AuthProvider>
+			<AuthProvider>
+				<App />
+			</AuthProvider>
 	)
 }

@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const ExerciseRoutineScreen = ({navigation}) => {
   return(
     <SafeAreaView style={styles.container}>
-      <Button dark mode="contained" color="#30bfbf" onPress={() => navigation.navigate('Add')}>
+      <Button dark mode="contained" color="#30bfbf" onPress={() => navigation.navigate('HomeFlow')}>
         <Ionicons name="arrow-back-outline" size={20} />
         <Text>Back</Text>
         <Text>                                                  </Text>

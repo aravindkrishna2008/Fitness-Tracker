@@ -49,7 +49,7 @@ export default function Navigator() {
 					inactiveTintColor: '#ffffff',
 				}}>
 				<Tab.Screen name="Home" component={DashboardScreen} tabBarColor="blue"/>
-				<Tab.Screen name="Add" component={AddExerciseScreen} />
+				{/* <Tab.Screen name="Add" component={AddExerciseScreen} /> */}
         <Tab.Screen name="Account" component={AccountScreen} />
 			</Tab.Navigator>
 	);

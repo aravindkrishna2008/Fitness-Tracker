@@ -10,21 +10,75 @@ import WalkScreen from '../screens/AddWalkScreen';
 import SigninScreen from '../screens/SigninScreen';
 import { navigationRef } from '../RootNavigation';
 import ResolveAuthScreen from '../screens/ResolveAuthScreen';
-import { Context as AuthContext } from '../context/AuthContext';
-import DashboardScreen from '../screens/DashboardScreen';
+import PastExerciseScreen from '../screens/PastExerciseRoutine';
+import PastWalkScreen from '../screens/PastWalkScreen';
+import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator()
 
+const exerciseNavigator = () => {
+  return (
+    <Tab.Navigator
+    activeColor="#f0edf6"
+    inactiveColor="white"
+    barStyle={{ backgroundColor: '#30bfbf' }}
+
+    initialRouteName="Home"
+    lazy={false}
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
+
+        if (route.name === 'Past Routines') {
+          iconName = focused ? 'clipboard' : 'clipboard-outline';
+          color = focused ? 'white' : 'black'
+        } else if (route.name === 'Add a Routine') {
+          iconName = focused ? 'add-circle' : 'add-circle-outline';
+          color = focused ? 'white' : 'black'
+        }
+        return <Ionicons name={iconName} size={22} color='white' />;
+      },
+    })}
+    >
+      <Tab.Screen name="Add a Routine" component={ExerciseRoutineScreen}/>
+      <Tab.Screen name="Past Routines" component={PastExerciseScreen} />
+    </Tab.Navigator>
+  )
+}
+
 const walkNavigator = () => {
-  <Tab.Navigator>
-    <Tab.Screen name="Home" component={DashboardScreen} tabBarColor="blue"/>
-    <Tab.Screen name="Walk" component={WalkScreen} tabBarColor="blue"/>
-  </Tab.Navigator>
+  return (
+    <Tab.Navigator
+    activeColor="#f0edf6"
+    inactiveColor="white"
+    barStyle={{ backgroundColor: '#30bfbf' }}
+
+    initialRouteName="Home"
+    lazy={false}
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
+
+        if (route.name === 'Past Walks') {
+          iconName = focused ? 'clipboard' : 'clipboard-outline';
+          color = focused ? 'white' : 'black'
+        } else if (route.name === 'Add a Run') {
+          iconName = focused ? 'add-circle' : 'add-circle-outline';
+          color = focused ? 'white' : 'black'
+        }
+        return <Ionicons name={iconName} size={22} color='white' />;
+      },
+    })}
+    >
+      <Tab.Screen name="Add a Run" component={WalkScreen}/>
+      <Tab.Screen name="Past Walks" component={PastWalkScreen} />
+    </Tab.Navigator>
+  )
 }
 
 export default function Navigator() {
-  const {state, clearErrorMessage} = useContext(AuthContext)
+
 	return (
 		<NavigationContainer ref={navigationRef}>
       <Stack.Navigator
@@ -37,8 +91,8 @@ export default function Navigator() {
         <Stack.Screen name="signup" component={SignupScreen}/>
         <Stack.Screen name="HomeFlow" component={HomeTab}/>
         <Stack.Screen name="Swim" component={SwimScreen}/>
-        <Stack.Screen name="Walk" component={WalkScreen}/>
-        <Stack.Screen name="ExerciseRoutine" component={ExerciseRoutineScreen} />
+        <Stack.Screen name="Walk" component={walkNavigator}/>
+        <Stack.Screen name="ExerciseRoutine" component={exerciseNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
 	);
