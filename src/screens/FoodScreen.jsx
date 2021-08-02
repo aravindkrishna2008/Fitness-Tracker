@@ -1,7 +1,7 @@
 import React from 'react'
 import {StyleSheet, View, Text, Button} from 'react-native'
 
-const AddExerciseScreen = ({navigation}) => {
+const FoodScreen = ({navigation}) => {
   return(
     <View style={styles.container}>
       <Text>AddExerciseScreen!</Text>
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AddExerciseScreen
+export default FoodScreen
