@@ -71,7 +71,7 @@ const DashboardScreen = ({navigation}) => {
           </Modal>
         </SafeAreaView>
         <FAB.Group
-          style={{fontFamily: 'Grandstander-Black'}}
+          style={{}}
           open={open}
           icon={open ? () => <Ionicons name="add-circle" size={25} color="#3A3b3C"/> : () => <Ionicons name="add-outline" size={25} color="#3A3b3C"/>}
           actions={[

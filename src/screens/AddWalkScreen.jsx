@@ -35,7 +35,7 @@ const theme = {
 
 
 const WalkScreen = ({navigation}) => {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState('none');
 
   const {createRun, state, clearErrorMessage} = useContext(RunContext)
 

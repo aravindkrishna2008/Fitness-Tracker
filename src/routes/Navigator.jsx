@@ -22,7 +22,7 @@ const exerciseNavigator = () => {
     <Tab.Navigator
     activeColor="#f0edf6"
     inactiveColor="white"
-    barStyle={{ backgroundColor: '#30bfbf' }}
+    barStyle={{ backgroundColor: '#30bfbf', margin: 10 }}
 
     initialRouteName="Home"
     lazy={false}
@@ -52,7 +52,7 @@ const walkNavigator = () => {
     <Tab.Navigator
     activeColor="#f0edf6"
     inactiveColor="white"
-    barStyle={{ backgroundColor: '#30bfbf' }}
+    barStyle={{ backgroundColor: '#30bfbf', margin: 10, borderRadius: 20}}
 
     initialRouteName="Home"
     lazy={false}

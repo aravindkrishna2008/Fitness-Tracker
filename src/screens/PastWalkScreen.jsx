@@ -1,22 +1,73 @@
-import React from 'react'
-import {StyleSheet, View, Text} from 'react-native'
-import { FAB, Portal, Provider, Title } from 'react-native-paper';
+import React, {useContext, useEffect} from 'react'
+import {StyleSheet, View, Text, FlatList, ScrollView} from 'react-native'
+import { FAB, Portal, Provider, Title, configureFonts, DefaultTheme, Subheading, Divider, Button} from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
+import { Context as RunContext } from '../context/AddWalkContext';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const PastWalkScreen = ({navigation}) => {
-  const [state, setState] = React.useState({ open: false });
+  const [stateForFab, setStateForFab] = React.useState({ open: false });
 
-  const onStateChange = ({ open }) => setState({ open });
+  const onStateChange = ({ open }) => setStateForFab({ open });
 
-  const { open } = state;
+  const { open } = stateForFab;
+
+  const {state, fetchRuns} = useContext(RunContext)
+
+  const fontConfig = {
+    web: {
+      regular: {
+        fontFamily: 'Grandstander-Black',
+        fontWeight: 'normal',
+      },
+    },
+    ios: {
+      regular: {
+        fontFamily: 'Grandstander-Medium',
+        fontWeight: 'normal',
+      },
+    },
+    android: {
+      regular: {
+        fontFamily: 'Grandstander-Medium',
+        fontWeight: 'normal',
+      }
+    }
+  };
+
+  const theme = {
+    ...DefaultTheme,
+    fonts: configureFonts(fontConfig),
+  };
+
+  useEffect(() => {
+    const fetchTheRuns = navigation.addListener('focus', () => {
+      fetchRuns()
+    });
+  
+    return fetchTheRuns;
+  }, [navigation]);
+  
 
   return (
-    <Provider>
+    <Provider theme={theme}>
       <Portal>
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <Title>Welcome to Past Run screen</Title>
-        </View>
+          <FlatList
+            data={state}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => {
+              return (
+                <View>
+                  <Button style={{margin: 10, borderColor: '"#6200ee', borderWidth: 0.09}} onPress={() => console.log('Pressed')}>{item.name} <Ionicons name="chevron-forward" size={15}/></Button>
+                  <Divider />
+                </View>
+              )
+            }}
+            />
+        </SafeAreaView>
         <FAB.Group
           open={open}
           icon={open ? () => <Ionicons name="add-circle" size={25} color="#3A3b3C"/> : () => <Ionicons name="add-outline" size={25} color="#3A3b3C"/>}
@@ -49,8 +100,6 @@ const PastWalkScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
   }
 })
 

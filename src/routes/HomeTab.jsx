@@ -1,5 +1,6 @@
 import * as React from 'react';
 import DashboardScreen from '../screens/DashboardScreen';
+import { Dimensions } from 'react-native';
 import AccountScreen from '../screens/AccountScreen';
 import { Ionicons } from '@expo/vector-icons';
 import FoodScreen from '../screens/FoodScreen';
@@ -9,16 +10,18 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 // const Tab = createBottomTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
+const windowWidth = (Dimensions.get('window').width)-100;
+const windowHeight = Dimensions.get('window').height;
+
+
 export default function Navigator() {
 	return (
 			<Tab.Navigator
 				initialRouteName="Home"
 				activeColor="#f0edf6"
 				inactiveColor="white"
-				barStyle={{ backgroundColor: '#30bfbf', margin: 10, fontFamily: 'Grandstander-Bold' }}
+				barStyle={{ backgroundColor: '#30bfbf', margin: 10, fontFamily: 'Grandstander-Bold', padding: 5, overflow: 'hidden', borderRadius: 2,}}
 				labelStyle={{fontFamily: 'Grandstander-Bold'}}
-				style={{fontFamily: 'Grandstander-Bold'}}
-		
 				initialRouteName="Home"
 				lazy={false}
 				screenOptions={({ route }) => ({
