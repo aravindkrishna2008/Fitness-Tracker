@@ -1,9 +1,36 @@
 import React, {useContext} from 'react'
-import {StyleSheet, View, Text} from 'react-native'
-import { FAB, Modal, Button, Portal, Provider, Title, IconButton } from 'react-native-paper';
+import {StyleSheet, View } from 'react-native'
+import { FAB, Modal, Button, Portal, Provider, Title, IconButton, Text, configureFonts, DefaultTheme, } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Context } from '../context/AuthContext';
+
+
+const fontConfig = {
+  web: {
+    regular: {
+      fontFamily: 'Grandstander-Black',
+      fontWeight: 'normal',
+    },
+	},
+  ios: {
+    regular: {
+      fontFamily: 'Grandstander-Medium',
+      fontWeight: 'normal',
+		},
+	},
+  android: {
+    regular: {
+      fontFamily: 'Grandstander-Medium',
+      fontWeight: 'normal',
+    }
+  }
+};
+
+const theme = {
+  ...DefaultTheme,
+  fonts: configureFonts(fontConfig),
+};
 
 
 const DashboardScreen = ({navigation}) => {
@@ -23,27 +50,28 @@ const DashboardScreen = ({navigation}) => {
 
 
   return (
-    <Provider>
+    <Provider theme={theme}>
       <Portal>
         <SafeAreaView style={styles.container}>
-          <Title>Welcome Home</Title>
+          <Title style={{fontFamily: 'Grandstander-Bold'}}>Welcome Home</Title>
           <View style={{position: 'absolute', alignSelf: 'flex-end', margin: 25, flexDirection: 'row'}}>
             <IconButton icon={() => <Ionicons name="log-out-outline" size={35}/>} onPress={showModal}/>
             <Text>  </Text>
           </View>
           <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
             <Ionicons name="log-out-outline" size={200} style={{alignSelf: 'center'}}/>
-            <Title style={{margin: 10}}>Are you sure you want to log out: </Title>
+            <Title style={{margin: 10,fontFamily: 'Grandstander-Bold'}}>Are you sure you want to log out: </Title>
             <Button dark={true} mode="contained" style={{margin: 10, backgroundColor: '#33B3A6'}} onPress={() => {
               signout()
               hideModal()
-            }}>Yes</Button>
+            }}><Text style={{color: 'white',fontFamily: 'Grandstander-Black'}}>Yes</Text></Button>
             <Button dark={true} mode="contained" style={{margin: 10, backgroundColor: '#33B3A6'}} onPress={() => {
               hideModal()
-            }}>No</Button>
+            }}><Text style={{color: 'white',fontFamily: 'Grandstander-Black'}}>No</Text></Button>
           </Modal>
         </SafeAreaView>
         <FAB.Group
+          style={{fontFamily: 'Grandstander-Black'}}
           open={open}
           icon={open ? () => <Ionicons name="add-circle" size={25} color="#3A3b3C"/> : () => <Ionicons name="add-outline" size={25} color="#3A3b3C"/>}
           actions={[

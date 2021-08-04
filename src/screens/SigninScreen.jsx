@@ -3,7 +3,6 @@ import {StyleSheet, View, Text } from 'react-native'
 import { TextInput, Button, Title } from 'react-native-paper'
 import { Ionicons } from '@expo/vector-icons'
 import {Context as AuthContext} from '../context/AuthContext'
-import {NavigationEvents} from '@react-navigation/native'
 
 const SigninScreen = ({navigation}) => {
   const { state, signin, clearErrorMessage} = useContext(

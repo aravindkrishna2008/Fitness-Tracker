@@ -15,7 +15,9 @@ export default function Navigator() {
 				initialRouteName="Home"
 				activeColor="#f0edf6"
 				inactiveColor="white"
-				barStyle={{ backgroundColor: '#30bfbf' }}
+				barStyle={{ backgroundColor: '#30bfbf', margin: 10, fontFamily: 'Grandstander-Bold' }}
+				labelStyle={{fontFamily: 'Grandstander-Bold'}}
+				style={{fontFamily: 'Grandstander-Bold'}}
 		
 				initialRouteName="Home"
 				lazy={false}
@@ -42,7 +44,7 @@ export default function Navigator() {
 						backgroundColor: '#30bfbf',
 					},
 					labelStyle: {
-						// fontFamily: 'Roboto-Condensed-Bold'
+						fontFamily: 'Grandstander-Bold'
 					},
 					activeTintColor: 'white',
 					inactiveTintColor: '#ffffff',
