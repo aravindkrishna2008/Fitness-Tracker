@@ -1,27 +1,58 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {StyleSheet, View, Text} from 'react-native'
-import { FAB, Portal, Provider, Title } from 'react-native-paper';
+import { FAB, Modal, Button, Portal, Provider, Title, IconButton } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { Context } from '../context/AuthContext';
 
 
 const DashboardScreen = ({navigation}) => {
   const [state, setState] = React.useState({ open: false });
 
+  const {signout} = useContext(Context)
+
   const onStateChange = ({ open }) => setState({ open });
 
   const { open } = state;
 
+  const [visible, setVisible] = React.useState(false);
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const containerStyle = {backgroundColor: 'white', margin: 10, borderRadius: 10, height: 400};
+
+
   return (
     <Provider>
       <Portal>
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <Title>Welcome Home</Title>
-        </View>
+          <View style={{position: 'absolute', alignSelf: 'flex-end', margin: 25, flexDirection: 'row'}}>
+            <IconButton icon={() => <Ionicons name="log-out-outline" size={35}/>} onPress={showModal}/>
+            <Text>  </Text>
+          </View>
+          <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
+            <Ionicons name="log-out-outline" size={200} style={{alignSelf: 'center'}}/>
+            <Title style={{margin: 10}}>Are you sure you want to log out: </Title>
+            <Button dark={true} mode="contained" style={{margin: 10, backgroundColor: '#33B3A6'}} onPress={() => {
+              signout()
+              hideModal()
+            }}>Yes</Button>
+            <Button dark={true} mode="contained" style={{margin: 10, backgroundColor: '#33B3A6'}} onPress={() => {
+              hideModal()
+            }}>No</Button>
+          </Modal>
+        </SafeAreaView>
         <FAB.Group
           open={open}
           icon={open ? () => <Ionicons name="add-circle" size={25} color="#3A3b3C"/> : () => <Ionicons name="add-outline" size={25} color="#3A3b3C"/>}
           actions={[
-            { icon: 'home', onPress: () => navigation.navigate('HomeFlow') },
+            {
+              icon: 'food',
+              label: 'Add a meal',
+              onPress: () => navigation.navigate('HomeFlow', { screen: 'Food', key: 1 })
+            },
+
             {
               icon: 'weight-lifter',
               label: 'Add an exercise routine',
@@ -50,7 +81,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     backgroundColor: 'white'
   },
   fab: {

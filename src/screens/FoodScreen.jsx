@@ -1,16 +1,11 @@
 import React from 'react'
 import {StyleSheet, View, Text, Button} from 'react-native'
+import { Title } from 'react-native-paper'
 
 const FoodScreen = ({navigation}) => {
   return(
     <View style={styles.container}>
-      <Text>AddExerciseScreen!</Text>
-      <Text></Text>
-      <Button title="Add a run" onPress={() => navigation.navigate("Walk")}/>
-      <Text></Text>
-      <Button title="Add a swim" onPress={() => navigation.navigate("Swim")}/>
-      <Text></Text>
-      <Button title="Add a exercise routine" onPress={() => navigation.navigate("ExerciseRoutine")}/>
+      <Title>Welcome to the food screen</Title>
     </View>
   )
 }
@@ -19,7 +14,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#fff'
   }
 })
 

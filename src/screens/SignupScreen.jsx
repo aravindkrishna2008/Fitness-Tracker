@@ -3,8 +3,6 @@ import {StyleSheet, View, Text, ScrollView} from 'react-native'
 import { TextInput, Button, Title } from 'react-native-paper'
 import { Ionicons } from '@expo/vector-icons'
 import { Context as AuthContext } from '../context/AuthContext'
-import { navigate } from '../navigationRef'
-import { Constants, LinearGradient } from 'expo';
 
 const SignupScreen = ({navigation}) => {
 
@@ -12,6 +10,7 @@ const SignupScreen = ({navigation}) => {
   const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+  const [disabled, setDisabled] = useState(false)
 
   const { state, signup, clearErrorMessage} = useContext(
     AuthContext
@@ -31,6 +30,12 @@ const SignupScreen = ({navigation}) => {
     // Prevent default action
     errorMessage();
   });
+
+  const check = () => {
+    if(email || password || firstName || lastName === ''){
+      setDisabled(false)
+    } 
+  }
 
   return(
     <View style={styles.container2}>
@@ -109,7 +114,7 @@ const SignupScreen = ({navigation}) => {
           {state.errorMessage ? (
             <Text style={styles.errorMessage}>{state.errorMessage}</Text>
           ) : null}
-        <Button dark={true} mode="contained" color={"#30bfbf"} onPress={() => signup({ firstName, lastName, email, password})}>Create</Button>
+        <Button dark={true} disabled={disabled} mode="contained" color={"#30bfbf"} onPress={() => signup({ firstName, lastName, email, password})}>Create</Button>
         <Button mode='text' onPress={() => navigation.navigate("Signin")}>Have an account? Sign in instead</Button>
       </ScrollView>
     </View>
