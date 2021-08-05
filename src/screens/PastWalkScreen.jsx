@@ -1,13 +1,35 @@
-import React, {useContext, useEffect} from 'react'
-import {StyleSheet, View, Text, FlatList, ScrollView} from 'react-native'
-import { FAB, Portal, Provider, Title, configureFonts, DefaultTheme, Subheading, Divider, Button} from 'react-native-paper';
+import React, {useContext, useEffect, useState} from 'react'
+import {StyleSheet, View, Text, FlatList, TouchableOpacity, Image} from 'react-native'
+import { FAB, Portal, Provider, Title, configureFonts, DefaultTheme, Subheading, Divider, Button, Modal, Paragraph} from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import { Context as RunContext } from '../context/AddWalkContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 const PastWalkScreen = ({navigation}) => {
   const [stateForFab, setStateForFab] = React.useState({ open: false });
+
+  const [image, setImage] = useState('')
+  const [description, setDescription] = useState('')
+  const [name, setName] = useState('')
+  const [datePublished, setDatePublished] = useState('')
+  const [visible, setVisible] = useState(false);
+  const [distance, setDistance] = useState('')
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const containerStyle = {backgroundColor: 'white', padding: 20, height: 500, margin: 20, overFlow: 'hidden', borderRadius: 10};
+
+  const getInfo = (item) => {
+    setImage(item.imageUris)
+    setDescription(item.description)
+    setName(item.name)
+    setName(name.toUpperCase())  
+    setDatePublished(item.datePublished)
+    setDistance(item.distance)
+    showModal()
+  }
 
   const onStateChange = ({ open }) => setStateForFab({ open });
 
@@ -54,19 +76,32 @@ const PastWalkScreen = ({navigation}) => {
     <Provider theme={theme}>
       <Portal>
         <SafeAreaView style={styles.container}>
-          <Title>Welcome to Past Run screen</Title>
+          <TouchableOpacity style={styles.iconButton}><MaterialIcons name="directions-run" size={200} color="#00a5a7" /></TouchableOpacity>
+          <Text></Text>
+          <Text></Text>
+          <Divider />
+          <View style={{backgroundColor: '#30bfbf', margin: 2, padding: 5, alignItems: 'center'}}><Title style={{color: 'white', fontFamily: 'Grandstander-Black'}}>Past Runs</Title></View>
           <FlatList
             data={state}
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => {
               return (
                 <View>
-                  <Button style={{margin: 10, borderColor: '"#6200ee', borderWidth: 0.09}} onPress={() => console.log('Pressed')}>{item.name} <Ionicons name="chevron-forward" size={15}/></Button>
+                  <Button style={{margin: 10, borderColor: '"#6200ee', borderWidth: 0.09, flex: 1}} onPress={() => {getInfo(item)}}>{item.name} <Ionicons name="chevron-forward" size={15}/></Button>
                   <Divider />
                 </View>
               )
             }}
             />
+        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
+          <Title style={{fontFamily: 'Grandstander-Black'}}>{name}</Title>
+          <Image source={{uri: image}} style={{height: 160, width: 280, borderRadius: 15, marginTop: 15}}/>
+          <Text></Text>
+          <Text><Subheading style={{fontFamily: 'Grandstander-Bold'}}>Description: </Subheading><Paragraph>{description}</Paragraph></Text>
+          <Text><Subheading style={{fontFamily: 'Grandstander-Bold'}}>Steps: </Subheading><Paragraph>{distance * 2000} steps</Paragraph></Text>
+          <Text><Subheading style={{fontFamily: 'Grandstander-Bold'}}>Published: </Subheading><Paragraph>{datePublished}</Paragraph></Text>
+        </Modal>
+
         </SafeAreaView>
         <FAB.Group
           open={open}
@@ -100,6 +135,20 @@ const PastWalkScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white'
+  },
+  iconButton: {
+    borderWidth: 3, 
+    height: 300, 
+    width: 300, 
+    borderRadius: 300, 
+    alignSelf: 'center', 
+    alignItems: 'center', 
+    justifyContent: 'center',
+    borderStyle: 'dotted',
+    borderColor: '#30bfbf',
+    marginTop: 10
+    
   }
 })
 
