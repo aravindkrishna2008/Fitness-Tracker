@@ -34,7 +34,7 @@ const createRun = (dispatch) => async ({ name, description, imageUris, distance}
   try {
     const stuffIGet = { name, description, imageUris, distance}
     const response = await fitnessApi.post('/myRuns/add', stuffIGet);
-    navigate("HomeFlow")
+    navigate("Walk", {screen: 'Past Walks'})
   } catch (err) {
    console.log(err)
    dispatch({

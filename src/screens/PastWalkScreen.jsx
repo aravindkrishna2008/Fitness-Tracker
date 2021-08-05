@@ -100,6 +100,10 @@ const PastWalkScreen = ({navigation}) => {
           <Text><Subheading style={{fontFamily: 'Grandstander-Bold'}}>Description: </Subheading><Paragraph>{description}</Paragraph></Text>
           <Text><Subheading style={{fontFamily: 'Grandstander-Bold'}}>Steps: </Subheading><Paragraph>{distance * 2000} steps</Paragraph></Text>
           <Text><Subheading style={{fontFamily: 'Grandstander-Bold'}}>Published: </Subheading><Paragraph>{datePublished}</Paragraph></Text>
+          <Button mode="contained" style={{backgroundColor: '#00a5a7', borderRadius: 10, marginHorizontal: 50, marginTop: 10}} onPress={hideModal}>
+            <Ionicons name="chevron-back-outline" size={15}/>
+            Back
+          </Button>
         </Modal>
 
         </SafeAreaView>
