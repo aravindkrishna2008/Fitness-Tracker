@@ -4,7 +4,6 @@ import HomeTab from './HomeTab'
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import SignupScreen from '../screens/SignupScreen';
-import SwimScreen from '../screens/AddSwimScreen';
 import ExerciseRoutineScreen from '../screens/AddExerciseRoutineScreen';
 import WalkScreen from '../screens/AddWalkScreen';
 import SigninScreen from '../screens/SigninScreen';
@@ -90,7 +89,6 @@ export default function Navigator() {
         <Stack.Screen name="Signin" component={SigninScreen} />
         <Stack.Screen name="signup" component={SignupScreen}/>
         <Stack.Screen name="HomeFlow" component={HomeTab}/>
-        <Stack.Screen name="Swim" component={SwimScreen}/>
         <Stack.Screen name="Walk" component={walkNavigator}/>
         <Stack.Screen name="ExerciseRoutine" component={exerciseNavigator} />
       </Stack.Navigator>
