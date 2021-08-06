@@ -1,14 +1,19 @@
-import React, {useContext, useEffect, useState} from 'react'
-import {StyleSheet, View, Text, FlatList, TouchableOpacity, Image} from 'react-native'
-import { FAB, Portal, Provider, Title, configureFonts, DefaultTheme, Subheading, Divider, Button, Modal, Paragraph} from 'react-native-paper';
+import React, {useContext, useEffect, useState, useCallback} from 'react'
+import {RefreshControl, StyleSheet, View, Text, FlatList, TouchableOpacity, Image} from 'react-native'
+import {FAB, Portal, Provider, Title, configureFonts, DefaultTheme, Subheading, Divider, Button, Modal, Paragraph, IconButton} from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import { Context as RunContext } from '../context/AddWalkContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
+import RNRestart from 'react-native-restart';
 
+
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 
 const PastWalkScreen = ({navigation}) => {
-  const [stateForFab, setStateForFab] = React.useState({ open: false });
+  const [stateForFab, setStateForFab] = useState({ open: false });
 
   const [image, setImage] = useState('')
   const [description, setDescription] = useState('')
@@ -16,6 +21,7 @@ const PastWalkScreen = ({navigation}) => {
   const [datePublished, setDatePublished] = useState('')
   const [visible, setVisible] = useState(false);
   const [distance, setDistance] = useState('')
+  const [id, setId] = useState('')
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -25,7 +31,7 @@ const PastWalkScreen = ({navigation}) => {
     setImage(item.imageUris)
     setDescription(item.description)
     setName(item.name)
-    setName(name.toUpperCase())  
+    // setName(name.toUpperCase())  
     setDatePublished(item.datePublished)
     setDistance(item.distance)
     showModal()
@@ -35,7 +41,15 @@ const PastWalkScreen = ({navigation}) => {
 
   const { open } = stateForFab;
 
-  const {state, fetchRuns} = useContext(RunContext)
+  const {state, fetchRuns, deleteRun} = useContext(RunContext)
+
+  const deleteTheRun = (item) => {
+    setId(item._id)
+    deleteRun({id})
+    fetchRuns()
+
+
+  }
 
   const fontConfig = {
     web: {
@@ -67,7 +81,6 @@ const PastWalkScreen = ({navigation}) => {
     const fetchTheRuns = navigation.addListener('focus', () => {
       fetchRuns()
     });
-  
     return fetchTheRuns;
   }, [navigation]);
   
@@ -87,14 +100,17 @@ const PastWalkScreen = ({navigation}) => {
             renderItem={({ item }) => {
               return (
                 <View>
-                  <Button style={{margin: 10, borderColor: '"#6200ee', borderWidth: 0.09, flex: 1}} onPress={() => {getInfo(item)}}>{item.name} <Ionicons name="chevron-forward" size={15}/></Button>
+                  <View style={{flexDirection: 'row'}}>
+                    <IconButton onPress={() => {deleteTheRun(item)}} icon="delete-outline"/>
+                    <Button style={{marginVertical: 10, marginRight: 10, borderColor: '"#6200ee', borderWidth: 0.09, flex: 1,}} onPress={() => {getInfo(item)}}>{item.name} <Ionicons name="chevron-forward" size={15}/></Button>
+                  </View>
                   <Divider />
                 </View>
               )
             }}
             />
         <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-          <Title style={{fontFamily: 'Grandstander-Black'}}>{name}</Title>
+          <Title style={{fontFamily: 'Grandstander-Black', color: 'black'}}>{name}</Title>
           <Image source={{uri: image}} style={{height: 160, width: 280, borderRadius: 15, marginTop: 15}}/>
           <Text></Text>
           <Text><Subheading style={{fontFamily: 'Grandstander-Bold'}}>Description: </Subheading><Paragraph>{description}</Paragraph></Text>
@@ -108,6 +124,7 @@ const PastWalkScreen = ({navigation}) => {
 
         </SafeAreaView>
         <FAB.Group
+          style={{marginBottom:0}}
           open={open}
           icon={open ? () => <Ionicons name="add-circle" size={25} color="#3A3b3C"/> : () => <Ionicons name="add-outline" size={25} color="#3A3b3C"/>}
           actions={[

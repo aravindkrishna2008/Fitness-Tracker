@@ -1,24 +1,24 @@
 import React, {useContext} from 'react'
-import {StyleSheet, View } from 'react-native'
-import { FAB, Modal, Button, Portal, Provider, Title, IconButton, Text, configureFonts, DefaultTheme, } from 'react-native-paper';
+import {StyleSheet, View, Image } from 'react-native'
+import { FAB, Modal, Button, Portal, Provider,  IconButton, Text, configureFonts, DefaultTheme, Title, Paragraph  } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Context } from '../context/AuthContext';
-
-
+ 
+ 
 const fontConfig = {
   web: {
     regular: {
       fontFamily: 'Grandstander-Black',
       fontWeight: 'normal',
     },
-	},
+  },
   ios: {
     regular: {
       fontFamily: 'Grandstander-Medium',
       fontWeight: 'normal',
-		},
-	},
+    },
+  },
   android: {
     regular: {
       fontFamily: 'Grandstander-Medium',
@@ -26,34 +26,38 @@ const fontConfig = {
     }
   }
 };
-
+ 
 const theme = {
   ...DefaultTheme,
   fonts: configureFonts(fontConfig),
 };
-
-
+ 
+ 
 const DashboardScreen = ({navigation}) => {
   const [state, setState] = React.useState({ open: false });
-
+ 
   const {signout} = useContext(Context)
-
+ 
   const onStateChange = ({ open }) => setState({ open });
-
+ 
   const { open } = state;
-
+ 
   const [visible, setVisible] = React.useState(false);
-
+ 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const containerStyle = {backgroundColor: 'white', margin: 10, borderRadius: 10, height: 400};
-
-
+ 
+ 
   return (
     <Provider theme={theme}>
       <Portal>
         <SafeAreaView style={styles.container}>
           <Title style={{fontFamily: 'Grandstander-Bold'}}>Welcome Home</Title>
+          <Image source={{uri: 'https://wallpaperaccess.com/full/654874.jpg'}} style={{height: 180, width:315, borderRadius: 10, marginTop: 10}}/>
+          <Title style={styles.title}>Welcome to fitlance 
+         </Title>
+         <Paragraph style={{margin:20}}>Welcome to fitlance, in this app you will be able to track your fitness and food diet. This will help people track their weight and help them loose it.This is also made from a not profit organization.The creators of this app know people don't like adds so we have no adds in our app. So enjoy fitlance and welome. This is written by the creators  </Paragraph>
           <View style={{position: 'absolute', alignSelf: 'flex-end', margin: 25, flexDirection: 'row'}}>
             <IconButton icon={() => <Ionicons name="log-out-outline" size={35}/>} onPress={showModal}/>
             <Text>  </Text>
@@ -80,7 +84,7 @@ const DashboardScreen = ({navigation}) => {
               label: 'Add a meal',
               onPress: () => navigation.navigate('HomeFlow', { screen: 'Food', key: 1 })
             },
-
+ 
             {
               icon: 'weight-lifter',
               label: 'Add an exercise routine',
@@ -104,7 +108,7 @@ const DashboardScreen = ({navigation}) => {
     </Provider>
   )
 }
-
+ 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -118,6 +122,10 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
+  title: {
+    marginTop: 10
+ 
+  }
 })
-
+ 
 export default DashboardScreen

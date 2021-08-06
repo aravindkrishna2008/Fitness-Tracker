@@ -44,8 +44,18 @@ const createRun = (dispatch) => async ({ name, description, imageUris, distance}
   }
 };
 
+const deleteRun = () => async ({id}) => {
+  
+  try {
+    const response = await fitnessApi.delete(`myRuns/${id}`);
+    navigate("Walk", {screen: 'Past Walks'})
+  } catch (err) {
+   console.log(err)
+  }
+};
+
 export const { Provider, Context } = createDataContext(
   runReducer,
-  { fetchRuns, createRun, clearErrorMessage },
+  { fetchRuns, createRun, clearErrorMessage, deleteRun },
   []
 );
