@@ -1,13 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import {StyleSheet, View, Text, Image} from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import {Button, Divider, TextInput} from 'react-native-paper'
+import {Button, IconButton, TextInput} from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 
 
 const ExerciseRoutineScreen = ({navigation}) => {
   const [image, setImage] = useState('https://lh3.googleusercontent.com/EbXw8rOdYxOGdXEFjgNP8lh-YAuUxwhOAe2jhrz3sgqvPeMac6a6tHvT35V6YMbyNvkZL4R_a2hcYBrtfUhLvhf-N2X3OB9cvH4uMw=w1064-v0')
+  const [exercises, setExercises] = useState([])
+  const [nameOfExercise, setNameOfExecise] = useState('')
+  const [minutes, setMinutes] = useState('')
+  const [seconds, setSeconds] = useState('')
 
   useEffect(() => {
     (async () => {
@@ -35,6 +39,9 @@ const ExerciseRoutineScreen = ({navigation}) => {
     }
   };
 
+  const addToList = () => {
+    
+  }
 
 
   return(
@@ -57,11 +64,11 @@ const ExerciseRoutineScreen = ({navigation}) => {
           }
         }}
       />
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', marginHorizontal: 10}}>
         <TextInput
           style={{width: 185}}
           left={<TextInput.Icon onPress={pickImage} name={() => <Image source={{uri: image}} style={{height: 50, width: 50}}/>} />}
-          label={'Name of routine'}
+          label={'Name of exercise'}
           mode=''
           theme={{
             roundness: 0,
@@ -70,6 +77,8 @@ const ExerciseRoutineScreen = ({navigation}) => {
               underlineColor:'transparent',
             }
           }}
+          value={nameOfExercise}
+          onChangeText={setNameOfExecise}
         />
         <View style={{flexDirection: 'column'}}>
           <Text>|</Text>
@@ -77,7 +86,7 @@ const ExerciseRoutineScreen = ({navigation}) => {
           <Text>|</Text>
         </View>
         <TextInput
-          style={{width: 60}}
+          style={{width: 55}}
           label={'Min'}
           mode=''
           theme={{
@@ -87,6 +96,9 @@ const ExerciseRoutineScreen = ({navigation}) => {
               underlineColor:'transparent',
             }
           }}
+          keyboardType="numeric"
+          value={minutes}
+          onChangeText={setMinutes}
         />
         <View style={{flexDirection: 'column'}}>
           <Text>|</Text>
@@ -94,7 +106,7 @@ const ExerciseRoutineScreen = ({navigation}) => {
           <Text>|</Text>
         </View>
         <TextInput
-          style={{width: 90}}
+          style={{width: 55}}
           label={'Sec'}
           mode=''
           theme={{
@@ -104,13 +116,17 @@ const ExerciseRoutineScreen = ({navigation}) => {
               underlineColor:'transparent',
             }
           }}
-          right={<TextInput.Icon onPress={() => console.log('preesseed')}name={() => <Ionicons name="add-circle" size={25} style={{color: '#00b35a'}}/>} />}
+          keyboardType="numeric"
+          value={seconds}
+          onChangeText={setSeconds}
         />
         <View style={{flexDirection: 'column'}}>
           <Text>|</Text>
           <Text>|</Text>
           <Text>|</Text>
         </View>
+        <IconButton style={{alignSelf: 'center'}}onPress={() => console.log('pressed')}icon="plus-circle" color="#00b35a"/>
+        
       </View>
     </SafeAreaView>
   )

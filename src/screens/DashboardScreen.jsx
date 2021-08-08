@@ -5,8 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Context } from '../context/AuthContext';
  
- 
-const fontConfig = {
+const fontConfig = { 
   web: {
     regular: {
       fontFamily: 'Grandstander-Black',
@@ -58,6 +57,10 @@ const DashboardScreen = ({navigation}) => {
           <Title style={styles.title}>Welcome to fitlance 
          </Title>
          <Paragraph style={{margin:20}}>Welcome to fitlance, in this app you will be able to track your fitness and food diet. This will help people track their weight and help them loose it.This is also made from a not profit organization.The creators of this app know people don't like adds so we have no adds in our app. So enjoy fitlance and welome. This is written by the creators  </Paragraph>
+         <View styles = {styles.buttoncontainer} >
+         <Button mode="contained" onPress={() => navigation.navigate("Walk", {screen: 'Past Walks'})}>Go to past walk</Button>
+         <Button mode="contained" onPress={() => navigation.navigate("ExerciseRoutine", {screen: 'Past Routines'})}>Go to past exersise</Button>
+         </View>
           <View style={{position: 'absolute', alignSelf: 'flex-end', margin: 25, flexDirection: 'row'}}>
             <IconButton icon={() => <Ionicons name="log-out-outline" size={35}/>} onPress={showModal}/>
             <Text>  </Text>
@@ -125,7 +128,15 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 10
  
+  },
+  buttoncontainer: {
+    marginTop:10
   }
 })
  
 export default DashboardScreen
+ 
+ 
+ 
+ 
+
