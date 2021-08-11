@@ -89,7 +89,7 @@ const PastWalkScreen = ({navigation}) => {
     <Provider theme={theme}>
       <Portal>
         <SafeAreaView style={styles.container}>
-          <TouchableOpacity style={styles.iconButton}><MaterialIcons name="directions-run" size={200} color="#00a5a7" /></TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton}><Image source = {{uri: 'https://image.flaticon.com/icons/png/512/763/763812.png'}} style={{height: 200, width: 200}}/></TouchableOpacity>
           <Text></Text>
           <Text></Text>
           <Divider />

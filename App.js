@@ -6,6 +6,7 @@ import { Provider as RunProvider } from './src/context/AddWalkContext';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { configureFonts, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import {Provider as ExerciseProvider} from './src/context/ExerciseContext'
 
 
 const fontConfig = {
@@ -78,11 +79,13 @@ export default () => {
 
 	return (
 		<PaperProvider theme={theme}>
-			<RunProvider>
-				<AuthProvider>
-					<App />
-				</AuthProvider>
-			</RunProvider>
+			<ExerciseProvider>
+				<RunProvider>
+					<AuthProvider>
+						<App />
+					</AuthProvider>
+				</RunProvider>
+			</ExerciseProvider>
 		</PaperProvider>
 	)
 }

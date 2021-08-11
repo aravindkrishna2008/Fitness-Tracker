@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {StyleSheet, View, Text, Image, Alert, FlatList} from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import {Button, IconButton, TextInput, List, Subheading, Paragraph} from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
+import { Context } from '../context/ExerciseContext';
 
 const ExerciseRoutineScreen = ({navigation}) => {
   const [image, setImage] = useState('https://lh3.googleusercontent.com/EbXw8rOdYxOGdXEFjgNP8lh-YAuUxwhOAe2jhrz3sgqvPeMac6a6tHvT35V6YMbyNvkZL4R_a2hcYBrtfUhLvhf-N2X3OB9cvH4uMw=w1064-v0')
@@ -11,6 +12,8 @@ const ExerciseRoutineScreen = ({navigation}) => {
   const [nameOfExercise, setNameOfExecise] = useState('')
   const [minutes, setMinutes] = useState(null)
   const [seconds, setSeconds] = useState(null)
+  const {createExercise, state, clearErrorMessage} = useContext(Context)
+  const [name, setName] = useState('')
 
   useEffect(() => {
     (async () => {
@@ -64,7 +67,7 @@ const ExerciseRoutineScreen = ({navigation}) => {
     setImage('https://image.flaticon.com/icons/png/512/4646/4646249.png')
   }
       const key = (Math.random()).toString()
-      const response = {image,nameOfExercise, minutes, seconds, key}
+      const response = {icon: image, exerciseName: nameOfExercise, minutes, seconds, key}
       setExercises([...exercises, response])
       console.log(exercises)
   }
@@ -96,6 +99,8 @@ const ExerciseRoutineScreen = ({navigation}) => {
             underlineColor:'transparent',
           }
         }}
+        value={name}
+        onChangeText={setName}
       />
       <View style={{flexDirection: 'row', marginHorizontal: 10}}>
         <TextInput
@@ -161,7 +166,8 @@ const ExerciseRoutineScreen = ({navigation}) => {
         <IconButton style={{alignSelf: 'center'}} onPress={() => {addToList()}}icon="plus-circle" color="#00b35a"/>
         
       </View>
-      <FlatList 
+      <FlatList
+          style={{height: 500}} 
           data={exercises}
           keyExtractor={(item) => item.key}
           renderItem = {({item}) => {
@@ -187,11 +193,12 @@ const ExerciseRoutineScreen = ({navigation}) => {
                   )}} />}
 
                 />
-
               </View>
             )
           }}
         />
+        <Button onPress={() => {createExercise({name, exercises})}}color="#30bfbf" style={{margin: 10}}dark mode="contained" icon='upload'>Upload</Button>
+
     </SafeAreaView>
   )
 }
