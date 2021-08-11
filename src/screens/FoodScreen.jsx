@@ -1,18 +1,23 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {StyleSheet, View, Text, Image, Alert, FlatList} from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import {Button, IconButton, TextInput, List, Subheading, Paragraph} from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
+import { Context } from '../context/FoodContext';
  
 const FoodScreen = ({navigation}) => {
   const [image, setImage] = useState('https://image.flaticon.com/icons/png/512/5273/5273472.png')
   const [exercises, setExercises] = useState([])
-  const [nameOfExercise, setNameOfExecise] = useState(null)
+  const [name, setNameOfExecise] = useState(null)
   const [calories, setCalories] = useState(null)
   const [meal, setMeal] = useState(null)
+  const {state, fetchFood, createFood, deleteFood} = useContext(Context)
  
   useEffect(() => {
+    const fetchTheFoods = navigation.addListener('focus', () => {
+      fetchFood()
+    });
     (async () => {
       if (Platform.OS !== 'web') {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -21,6 +26,8 @@ const FoodScreen = ({navigation}) => {
         }
       }
     })();
+
+    return fetchTheFoods
   }, []);
  
   const pickImage = async () => {
@@ -67,17 +74,18 @@ const FoodScreen = ({navigation}) => {
     setImage('https://image.flaticon.com/icons/png/512/4192/4192361.png')
   }
     const key = (Math.random()).toString()
-    const response = {image,nameOfExercise, calories, meal, key}
+    const response = {image,name, calories, meal, key}
+    createFood(response)
     setExercises([...exercises, response])
     setCalories(null)
     setNameOfExecise(null)
     setMeal(null)
+    fetchFood()
 
   }
  
   const deleteSomething = (id) => {
-    const newExercises = exercises.filter((item) => item.key !== id);
-    setExercises(newExercises);
+    deleteFood(id)
   }
  
  
@@ -103,7 +111,7 @@ const FoodScreen = ({navigation}) => {
               underlineColor:'transparent',
             }
           }}
-          value={nameOfExercise}
+          value={name}
           onChangeText={setNameOfExecise}
         />
         <View style={{flexDirection: 'column'}}>
@@ -154,13 +162,13 @@ const FoodScreen = ({navigation}) => {
         
       </View>
       <FlatList 
-          data={exercises.reverse()}
-          keyExtractor={(item) => item.key}
+          data={state.reverse()}
+          keyExtractor={(item) => item.id}
           renderItem = {({item}) => {
             return (
               <View>
                 <List.Item
-                  title={item.nameOfExercise}
+                  title={item.name}
                   description={() => {
                     return(
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -171,11 +179,11 @@ const FoodScreen = ({navigation}) => {
                     return(
                      <Image source = {{uri: item.image}} style={{height: 50, width: 50, borderRadius: 50}}/>
                   )}} />}
-                  right={props => <List.Icon {...props} icon={() => {
-                    return(
-                    //  <Image source = {{uri: item.image}} style={{height: 50, width: 50, borderRadius: 50}}/>
-                    <IconButton onPress={() => deleteSomething(item.key)}icon="delete-outline" size={26}/>
-                  )}} />}
+                  // right={props => <List.Icon {...props} icon={() => {
+                  //   return(
+                  //   //  <Image source = {{uri: item.image}} style={{height: 50, width: 50, borderRadius: 50}}/>
+                  //   // <IconButton onPress={() => deleteSomething(item.id)}icon="delete-outline" size={26}/>
+                  // )}} />}
  
                 />
  

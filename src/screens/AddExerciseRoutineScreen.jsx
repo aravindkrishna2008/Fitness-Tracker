@@ -184,7 +184,7 @@ const ExerciseRoutineScreen = ({navigation}) => {
                     )}}
                   left={props => <List.Icon {...props} icon={() => {
                     return(
-                     <Image source = {{uri: item.image}} style={{height: 50, width: 50, borderRadius: 50}}/>
+                     <Image source = {{uri: item.icon}} style={{height: 50, width: 50, borderRadius: 50}}/>
                   )}} />}
                   right={props => <List.Icon {...props} icon={() => {
                     return(
@@ -198,6 +198,9 @@ const ExerciseRoutineScreen = ({navigation}) => {
           }}
         />
         <Button onPress={() => {createExercise({name, exercises})}}color="#30bfbf" style={{margin: 10}}dark mode="contained" icon='upload'>Upload</Button>
+        {state.errorMessage ? (
+            <Text style={{color: "#ff0f0f", alignSelf: 'center', fontWeight: 'bold'}}>{state.errorMessage}</Text>
+          ) : null}
 
     </SafeAreaView>
   )

@@ -7,6 +7,7 @@ import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { configureFonts, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import {Provider as ExerciseProvider} from './src/context/ExerciseContext'
+import {Provider as FoodProvider} from './src/context/FoodContext'
 
 
 const fontConfig = {
@@ -79,13 +80,15 @@ export default () => {
 
 	return (
 		<PaperProvider theme={theme}>
-			<ExerciseProvider>
-				<RunProvider>
-					<AuthProvider>
-						<App />
-					</AuthProvider>
-				</RunProvider>
+			<FoodProvider>
+				<ExerciseProvider>
+					<RunProvider>
+						<AuthProvider>
+							<App />
+						</AuthProvider>
+					</RunProvider>
 			</ExerciseProvider>
+			</FoodProvider>
 		</PaperProvider>
 	)
 }
