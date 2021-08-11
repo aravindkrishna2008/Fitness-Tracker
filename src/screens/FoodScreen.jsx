@@ -6,11 +6,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
  
 const FoodScreen = ({navigation}) => {
-  const [image, setImage] = useState('https://lh3.googleusercontent.com/EbXw8rOdYxOGdXEFjgNP8lh-YAuUxwhOAe2jhrz3sgqvPeMac6a6tHvT35V6YMbyNvkZL4R_a2hcYBrtfUhLvhf-N2X3OB9cvH4uMw=w1064-v0')
+  const [image, setImage] = useState('https://image.flaticon.com/icons/png/512/5273/5273472.png')
   const [exercises, setExercises] = useState([])
-  const [nameOfExercise, setNameOfExecise] = useState('')
-  const [minutes, setMinutes] = useState(null)
-  const [seconds, setSeconds] = useState(null)
+  const [nameOfExercise, setNameOfExecise] = useState(null)
+  const [calories, setCalories] = useState(null)
+  const [meal, setMeal] = useState(null)
  
   useEffect(() => {
     (async () => {
@@ -39,14 +39,43 @@ const FoodScreen = ({navigation}) => {
   };
  
   const addToList = () => {
-      const key = (Math.random()).toString()
-      const response = {image,nameOfExercise, minutes, seconds, key}
-      setExercises([...exercises, response])
-      console.log(exercises)
+    if (image === 'https://image.flaticon.com/icons/png/512/5273/5273472.png') {
+      setImage('https://image.flaticon.com/icons/png/512/4192/4192361.png')
+  }
+    if (image === 'https://image.flaticon.com/icons/png/512/4192/4192361.png') {
+      setImage('https://image.flaticon.com/icons/png/512/5318/5318728.png')
+  }
+  if (image === 'https://image.flaticon.com/icons/png/512/5318/5318728.png') {
+    setImage('https://image.flaticon.com/icons/png/512/926/926292.png')
+  }
+  if (image === 'https://image.flaticon.com/icons/png/512/926/926292.png') {
+    setImage('https://image.flaticon.com/icons/png/512/3946/3946536.png')
+  }
+  if (image === 'https://image.flaticon.com/icons/png/512/3946/3946536.png') {
+    setImage('https://image.flaticon.com/icons/png/512/3014/3014470.png')
+  }
+  if (image === 'https://image.flaticon.com/icons/png/512/3014/3014470.png') {
+    setImage('https://image.flaticon.com/icons/png/512/5346/5346138.png')
+  }
+  if (image === 'https://image.flaticon.com/icons/png/512/5346/5346138.png') {
+    setImage('https://image.flaticon.com/icons/png/512/4729/4729975.png')
+  }
+  if (image === 'https://image.flaticon.com/icons/png/512/4729/4729975.png') {
+    setImage('https://image.flaticon.com/icons/png/512/5318/5318636.png')
+  }
+  if (image === 'https://image.flaticon.com/icons/png/512/5318/5318636.png') {
+    setImage('https://image.flaticon.com/icons/png/512/4192/4192361.png')
+  }
+    const key = (Math.random()).toString()
+    const response = {image,nameOfExercise, calories, meal, key}
+    setExercises([...exercises, response])
+    setCalories(null)
+    setNameOfExecise(null)
+    setMeal(null)
+
   }
  
   const deleteSomething = (id) => {
-    console.log(id)
     const newExercises = exercises.filter((item) => item.key !== id);
     setExercises(newExercises);
   }
@@ -63,7 +92,7 @@ const FoodScreen = ({navigation}) => {
  
       <View style={{flexDirection: 'row', marginHorizontal: 10}}>
         <TextInput
-          style={{width: 185}}
+          style={{width: 170}}
           left={<TextInput.Icon onPress={pickImage} name={() => <Image source={{uri: image}} style={{height: 50, width: 50}}/>} />}
           label={'Name of food'}
           mode=''
@@ -83,7 +112,7 @@ const FoodScreen = ({navigation}) => {
           <Text>|</Text>
         </View>
         <TextInput
-          style={{width: 55}}
+          style={{width: 75}}
           label={'Calories'}
           mode=''
           theme={{
@@ -94,8 +123,8 @@ const FoodScreen = ({navigation}) => {
             }
           }}
           keyboardType="numeric"
-          value={minutes}
-          onChangeText={setMinutes}
+          value={calories}
+          onChangeText={setCalories}
         />
         <View style={{flexDirection: 'column'}}>
           <Text>|</Text>
@@ -103,7 +132,7 @@ const FoodScreen = ({navigation}) => {
           <Text>|</Text>
         </View>
         <TextInput
-          style={{width: 55}}
+          style={{width: 70}}
           label={'meal'}
           mode=''
           theme={{
@@ -113,19 +142,19 @@ const FoodScreen = ({navigation}) => {
               underlineColor:'transparent',
             }
           }}
-          value={seconds}
-          onChangeText={setSeconds}
+          value={meal}
+          onChangeText={setMeal}
         />
         <View style={{flexDirection: 'column'}}>
           <Text>|</Text>
           <Text>|</Text>
           <Text>|</Text>
         </View>
-        <IconButton style={{alignSelf: 'center'}} onPress={() => {addToList()}}icon="plus-circle" color="#00b35a"/>
+        <IconButton style={{alignSelf: 'center', marginLeft: 322, position: 'absolute'}} onPress={() => {addToList()}}icon="plus-circle" color="#00b35a" size={20}/>
         
       </View>
       <FlatList 
-          data={exercises}
+          data={exercises.reverse()}
           keyExtractor={(item) => item.key}
           renderItem = {({item}) => {
             return (
@@ -135,8 +164,7 @@ const FoodScreen = ({navigation}) => {
                   description={() => {
                     return(
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Subheading>Time: </Subheading>
-                        <Paragraph>{item.minutes} min {item.seconds} sec</Paragraph>
+                        <Paragraph>{item.calories} Calories, {item.meal}</Paragraph>
                       </View>
                     )}}
                   left={props => <List.Icon {...props} icon={() => {

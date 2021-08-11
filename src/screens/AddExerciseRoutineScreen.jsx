@@ -39,6 +39,30 @@ const ExerciseRoutineScreen = ({navigation}) => {
   };
 
   const addToList = () => {
+    if (image === 'https://lh3.googleusercontent.com/EbXw8rOdYxOGdXEFjgNP8lh-YAuUxwhOAe2jhrz3sgqvPeMac6a6tHvT35V6YMbyNvkZL4R_a2hcYBrtfUhLvhf-N2X3OB9cvH4uMw=w1064-v0') {
+      setImage('https://image.flaticon.com/icons/png/512/2362/2362199.png')
+  }
+  if (image === 'https://image.flaticon.com/icons/png/512/4646/4646249.png') {
+    setImage('https://image.flaticon.com/icons/png/512/2362/2362199.png')
+  }
+  if (image === 'https://image.flaticon.com/icons/png/512/2362/2362199.png') {
+    setImage('https://image.flaticon.com/icons/png/512/2362/2362199.png')
+  }
+  if (image === 'https://image.flaticon.com/icons/png/512/2362/2362199.png') {
+    setImage('https://image.flaticon.com/icons/png/512/4072/4072275.png')
+  }
+  if (image === 'https://image.flaticon.com/icons/png/512/4072/4072275.png') {
+    setImage('https://image.flaticon.com/icons/png/512/2548/2548429.png')
+  }
+  if (image === 'https://image.flaticon.com/icons/png/512/2548/2548429.png') {
+    setImage('https://image.flaticon.com/icons/png/512/5147/5147050.png')
+  }
+  if (image === 'https://image.flaticon.com/icons/png/512/5147/5147050.png') {
+    setImage('https://image.flaticon.com/icons/png/512/2833/2833556.png')
+  }
+  if (image === 'https://image.flaticon.com/icons/png/512/2833/2833556.png') {
+    setImage('https://image.flaticon.com/icons/png/512/4646/4646249.png')
+  }
       const key = (Math.random()).toString()
       const response = {image,nameOfExercise, minutes, seconds, key}
       setExercises([...exercises, response])
